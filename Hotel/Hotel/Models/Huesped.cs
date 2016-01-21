@@ -5,7 +5,9 @@ using System.Web;
 
 namespace Hotel.Models
 {
-      //Se crea modelo de huesped
+    public class Huesped
+    {
+        //Se crea modelo de huesped
         public class Huesped
         {
             public int huespedID { get; set; }
@@ -17,4 +19,5 @@ namespace Hotel.Models
             // Huesped tiene una coleccion de reservaciones
             //   public ICollection<Reservacion> reservaciones { get; set; }
         }
+    }
 }
