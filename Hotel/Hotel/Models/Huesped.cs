@@ -15,6 +15,6 @@ namespace Hotel.Models
             public String telefono { get; set; }
 
             // Huesped tiene una coleccion de reservaciones
-            //   public ICollection<Reservacion> reservaciones { get; set; }
+               public ICollection<Reservacion> reservaciones { get; set; }
         }
     }
