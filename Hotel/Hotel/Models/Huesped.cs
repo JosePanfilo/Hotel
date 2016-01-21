@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,6 +9,7 @@ namespace Hotel.Models
         //Se crea modelo de huesped
         public class Huesped
         {
+            [Key]
             public int huespedID { get; set; }
             public String nombre { get; set; }
             public String apellidoP { get; set; }
@@ -15,6 +17,6 @@ namespace Hotel.Models
             public String telefono { get; set; }
 
             // Huesped tiene una coleccion de reservaciones
-               public ICollection<Reservacion> reservaciones { get; set; }
+              // public ICollection<Reservacion> reservaciones { get; set; }
         }
     }
