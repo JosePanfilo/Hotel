@@ -8,7 +8,9 @@ namespace Hotel.Models
         //Se crea modelo de huesped
         public class Huesped
         {
-            public int huespedID { get; set; }
+            public int huespedID { get; set; }// llave primaria
+
+
             public String nombre { get; set; }
             public String apellidoP { get; set; }
             public String apellidoM { get; set; }

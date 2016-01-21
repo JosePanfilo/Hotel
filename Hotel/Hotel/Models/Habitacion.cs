@@ -7,7 +7,8 @@ namespace Hotel.Models
 {
     public class Habitacion
     {
-        public int habitacionID { get; set; }
+        public int habitacionID { get; set; }//Llave primaria
+
         public string tamañoHabitacion { get; set; }
         public Boolean estado { get; set; }
 
