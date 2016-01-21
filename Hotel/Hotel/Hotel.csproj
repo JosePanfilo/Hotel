@@ -182,7 +182,6 @@
     <Compile Include="Models\Huesped.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Prueba1.cs" />
     <Compile Include="Models\Reservacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -247,16 +246,16 @@
     <Content Include="Views\Huesped\Details.cshtml" />
     <Content Include="Views\Huesped\Edit.cshtml" />
     <Content Include="Views\Huesped\Index.cshtml" />
-    <Content Include="Views\Habitacion\Create.cshtml" />
-    <Content Include="Views\Habitacion\Delete.cshtml" />
-    <Content Include="Views\Habitacion\Details.cshtml" />
-    <Content Include="Views\Habitacion\Edit.cshtml" />
-    <Content Include="Views\Habitacion\Index.cshtml" />
     <Content Include="Views\Reservacion\Create.cshtml" />
     <Content Include="Views\Reservacion\Delete.cshtml" />
     <Content Include="Views\Reservacion\Details.cshtml" />
     <Content Include="Views\Reservacion\Edit.cshtml" />
     <Content Include="Views\Reservacion\Index.cshtml" />
+    <Content Include="Views\Habitacion\Create.cshtml" />
+    <Content Include="Views\Habitacion\Delete.cshtml" />
+    <Content Include="Views\Habitacion\Details.cshtml" />
+    <Content Include="Views\Habitacion\Edit.cshtml" />
+    <Content Include="Views\Habitacion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

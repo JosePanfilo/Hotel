@@ -6,18 +6,19 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Hotel.DAL;
 using Hotel.Models;
 
 namespace Hotel.Controllers
 {
     public class HabitacionController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private Contexto db = new Contexto();
 
         // GET: Habitacion
         public ActionResult Index()
         {
-            return View(db.Habitacions.ToList());
+            return View(db.habitacion.ToList());
         }
 
         // GET: Habitacion/Details/5
@@ -27,7 +28,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Habitacion habitacion = db.Habitacions.Find(id);
+            Habitacion habitacion = db.habitacion.Find(id);
             if (habitacion == null)
             {
                 return HttpNotFound();
@@ -50,7 +51,7 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Habitacions.Add(habitacion);
+                db.habitacion.Add(habitacion);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +66,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Habitacion habitacion = db.Habitacions.Find(id);
+            Habitacion habitacion = db.habitacion.Find(id);
             if (habitacion == null)
             {
                 return HttpNotFound();
@@ -96,7 +97,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Habitacion habitacion = db.Habitacions.Find(id);
+            Habitacion habitacion = db.habitacion.Find(id);
             if (habitacion == null)
             {
                 return HttpNotFound();
@@ -109,8 +110,8 @@ namespace Hotel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Habitacion habitacion = db.Habitacions.Find(id);
-            db.Habitacions.Remove(habitacion);
+            Habitacion habitacion = db.habitacion.Find(id);
+            db.habitacion.Remove(habitacion);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
