@@ -29,5 +29,11 @@ namespace Hotel.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Hotel.Models.Huesped> Huespeds { get; set; }
+
+        public System.Data.Entity.DbSet<Hotel.Models.Habitacion> Habitacions { get; set; }
+
+        public System.Data.Entity.DbSet<Hotel.Models.Reservacion> Reservacions { get; set; }
     }
 }
