@@ -53,4 +53,25 @@ namespace Hotel.Models
                 }
             }
         }
+        /*Representa la definicion de un modelo para vista (ViewModel),
+        * por lo que no contiene información de relaciones con otras entidades*/
+    public class VMHuesped
+    {
+        public int huespedID { get; set; }
+        public String nombre { get; set; }
+        public String apellidoP { get; set; }
+        public String apellidoM { get; set; }
+        public String telefono { get; set; }
+
+
+        public VMHuesped(Huesped huesped)
+        {
+            this.huespedID = huesped.huespedID;
+            this.nombre = huesped.nombre;
+            this.apellidoM = huesped.apellidoM;
+            this.apellidoP = huesped.apellidoP;
+            this.telefono = huesped.telefono;
+           
+        }
     }
+}

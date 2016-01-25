@@ -4,10 +4,16 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     Hotel.Models.Huesped nuevoHuesped = new Hotel.Models.Huesped();
-   // Hotel.Models.VMHuesped nuevoHuesped = new Hotel.Models.VMHuesped();
+    Hotel.Models.VMHuesped vmHuesped = new Hotel.Models.VMHuesped(nuevoHuesped);
 }
 
-<h2>Index</h2>
+<h2>Index</h2>\
+
+@using (Html.BeginForm(null, null, FormMethod.Get))
+{
+    <input type="text" name="strBuscado" value="" placeholder="Buscar Alumno" />
+    <button>Buscar</button>
+}
 
 <!-- Trigger the modal with a button -->
 <a data-toggle="modal" data-target="#modalAlta">Nuevo Huesped</a>
@@ -37,9 +43,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <!--<td>
-            @Html.RadioButton("seleccion",item.huespedID)
-        </td>-->
         <td>
             @Html.DisplayFor(modelItem => item.nombre)
         </td>
@@ -73,7 +76,7 @@
                 <h4 class="modal-title">Registro de Nuevo Huesped</h4>
             </div>
             <div class="modal-body">
-                <!-- VISTA DE CREACION DE HUESPEDES-->
+                <!-- VISTA DE CREACION DE ALUMNOS-->
                 @Html.Partial("Create", nuevoHuesped)
                 <p>Modal para crear un nuevo Huesped</p>
             </div>
@@ -96,8 +99,8 @@
                 <h4 class="modal-title">Detalles</h4>
             </div>
             <div class="modal-body">
-                <!-- VISTA DE DETALLES DE HUESPED-->
-                @*Html.Partial("Details", vmAlumno)*@
+                <!-- VISTA DE DETALLES DE Huesped-->
+                @Html.Partial("Details", vmHuesped)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
