@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     Hotel.Models.Huesped nuevoHuesped = new Hotel.Models.Huesped();
+   // Hotel.Models.VMHuesped nuevoHuesped = new Hotel.Models.VMHuesped();
 }
 
 <h2>Index</h2>
@@ -36,6 +37,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <!--<td>
+            @Html.RadioButton("seleccion",item.huespedID)
+        </td>-->
         <td>
             @Html.DisplayFor(modelItem => item.nombre)
         </td>
@@ -69,7 +73,7 @@
                 <h4 class="modal-title">Registro de Nuevo Huesped</h4>
             </div>
             <div class="modal-body">
-                <!-- VISTA DE CREACION DE ALUMNOS-->
+                <!-- VISTA DE CREACION DE HUESPEDES-->
                 @Html.Partial("Create", nuevoHuesped)
                 <p>Modal para crear un nuevo Huesped</p>
             </div>
@@ -92,7 +96,7 @@
                 <h4 class="modal-title">Detalles</h4>
             </div>
             <div class="modal-body">
-                <!-- VISTA DE DETALLES DE ALUMNO-->
+                <!-- VISTA DE DETALLES DE HUESPED-->
                 @*Html.Partial("Details", vmAlumno)*@
             </div>
             <div class="modal-footer">
@@ -133,7 +137,7 @@
                 <h4 class="modal-title">Eliminar</h4>
             </div>
             <div class="modal-body">
-                @*Html.Partial("Delete", vmAlumno)*@
+                @*Html.Partial("Delete", vmHuesped)*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
