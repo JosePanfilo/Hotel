@@ -3,14 +3,21 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Hotel.Models.Huesped nuevoHuesped = new Hotel.Models.Huesped();
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<!-- Trigger the modal with a button -->
+<a data-toggle="modal" data-target="#modalAlta">Nuevo Huesped</a>
+
+        @*
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        *@
+
+<table id="tablaHuesped" class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)
@@ -42,11 +49,95 @@
             @Html.DisplayFor(modelItem => item.telefono)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.huespedID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.huespedID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.huespedID })
+            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" huespedId="@item.huespedID">Detalles</a> |
+            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" huespedId="@item.huespedID">Borrar</a> |
+            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" huespedId="@item.huespedID">Editar</a>
         </td>
     </tr>
 }
 
 </table>
+<!------------------------------------------------------------------------------------------------------->
+                        <!--MODAL DE CREATE-->
+<div id="modalAlta" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Registro de Nuevo Huesped</h4>
+            </div>
+            <div class="modal-body">
+                <!-- VISTA DE CREACION DE ALUMNOS-->
+                @Html.Partial("Create", nuevoHuesped)
+                <p>Modal para crear un nuevo Huesped</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div><!-- Modal -->
+<!------------------------------------------------------------------------------------------------------->
+                                <!--MODAL DE DETAILS-->
+<div id="modalDetalles" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Detalles</h4>
+            </div>
+            <div class="modal-body">
+                <!-- VISTA DE DETALLES DE ALUMNO-->
+                @*Html.Partial("Details", vmAlumno)*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------------------------------------------------------------------------------->
+                                    <!--MODAL DE EDIT-->
+<div id="modalEditar" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modificar</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("Edit", nuevoHuesped)
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------------------------------------------------------------------------------->
+                                    <!--MODAL DE DELETE-->
+<div id="modalBorrar" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Eliminar</h4>
+            </div>
+            <div class="modal-body">
+                @*Html.Partial("Delete", vmAlumno)*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
