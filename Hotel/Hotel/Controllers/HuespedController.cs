@@ -14,62 +14,14 @@ namespace Hotel.Controllers
     public class HuespedController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        public JsonResult AjaxIndex(String strBuscado)
+        public ActionResult PruebaAjax()
         {
-            //var huespedes = db.Huespeds.ToList();
-
-            var huespedes = from Huesped in db.Huespeds
-                          where Huesped.nombre.Contains(strBuscado)
-                          select new
-                          {
-                              huespedID = Huesped.huespedID,
-                              nombre = Huesped.nombre,
-                              apellidoP = Huesped.apellidoP,
-                              apellidoM = Huesped.apellidoM,
-                              telefono = Huesped.telefono
-                          };
-
-            return Json(huespedes, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult EntregarDatos()
-        {
-            //var listaJson = from Huesped in 
-            //return Json(db.carreras.ToList(),JsonRequestBehavior.AllowGet);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            String dato = "Esto viene del server";
-            return Json(jss.Serialize(dato), JsonRequestBehavior.AllowGet);
+            return View();
         }
 
         // GET: Huesped
-        //Valor 
-       ///////// [Authorize(Roles = "Administrador, Capturista")]
-        public ActionResult JsonIndex(String strBuscado = "")
+        public ActionResult Index()
         {
-            //Se declara una lista de alumnos
-            IEnumerable<Huesped> Huespedes;
-
-            //Se busca una cadena de caracteres por nombre
-            Huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
-
-            IEnumerable<VMHuesped> vmHuesped = from Huesped in db.Huespeds
-                                               where Huesped.nombre.Contains(strBuscado)
-                                               select new VMHuesped(Huesped);
-
-            //Se envia datos principales a vista
-            return View(Huespedes.ToList());
-        }
-
-        // GET: Huesped
-        public ActionResult Index(String strBuscado)
-        {
-            //Se declara una lista de Huespedes
-            IEnumerable<Huesped> huespedes;
-
-            //Se busca una cadena de caracteres por nombre
-            huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
-            
             return View(db.Huespeds.ToList());
         }
 
@@ -87,28 +39,11 @@ namespace Hotel.Controllers
             }
             return View(huesped);
         }
-
-        // GET: Alumno/Details/5
-       //////// [Authorize(Roles = "Administrador, Capturista")]
+        //GET: Huesped/Details/5
         public JsonResult AjaxDetails(int? id)
         {
             Huesped huesped = db.Huespeds.Find(id);
             VMHuesped vmHuesped = new VMHuesped(huesped);
-
-            return Json(vmHuesped, JsonRequestBehavior.AllowGet);
-        }
-
-        // GET: Alumno/Details/5
-        [HttpPost]
-       ////////// [Authorize(Roles = "Administrador, Capturista")]
-        public JsonResult AjaxDetails(Huesped huesped)
-        {
-            db.Entry(huesped).State = EntityState.Modified;
-            db.SaveChanges();
-
-            VMHuesped vmHuesped = new VMHuesped(huesped);
-
-            return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Huesped/Create
@@ -146,6 +81,7 @@ namespace Hotel.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(huesped);
         }
 
@@ -163,6 +99,16 @@ namespace Hotel.Controllers
                 return RedirectToAction("Index");
             }
             return View(huesped);
+        }
+        public JsonResult AjaxEdit(int huespedID = 0)
+        {
+            /*Un objeto instanciado del modelo de datos*/
+            Huesped huesped = db.Huespeds.Find(huespedID);
+
+            /*Necesito una instancia del modelo de vista*/
+            VMHuesped vmHuesped = new VMHuesped(huesped);
+
+            return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
