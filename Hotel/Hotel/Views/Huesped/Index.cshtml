@@ -7,7 +7,7 @@
     Hotel.Models.VMHuesped vmHuesped = new Hotel.Models.VMHuesped(nuevoHuesped);
 }
 
-<h2>Index</h2>\
+<h2>Index</h2>
 
 @using (Html.BeginForm(null, null, FormMethod.Get))
 {
@@ -100,7 +100,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE DETALLES DE Huesped-->
-                @Html.Partial("Details", vmHuesped)
+                @*@Html.Partial("Details", vmHuesped)*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
