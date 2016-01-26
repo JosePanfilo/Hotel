@@ -7,11 +7,11 @@
     Hotel.Models.VMHuesped vmHuesped = new Hotel.Models.VMHuesped(nuevoHuesped);
 }
 
-<h2>Index</h2>\
+<h2>Index</h2>
 
 @using (Html.BeginForm(null, null, FormMethod.Get))
 {
-    <input type="text" name="strBuscado" value="" placeholder="Buscar Alumno" />
+    <input type="text" name="strBuscado" value="" placeholder="Buscar Huesped" />
     <button>Buscar</button>
 }
 
@@ -100,7 +100,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE DETALLES DE Huesped-->
-                @Html.Partial("Details", vmHuesped)
+                Html.Partial("Details", vmHuesped)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -123,7 +123,7 @@
                 @Html.Partial("Edit", nuevoHuesped)
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnEditar" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -140,7 +140,7 @@
                 <h4 class="modal-title">Eliminar</h4>
             </div>
             <div class="modal-body">
-                @*Html.Partial("Delete", vmHuesped)*@
+                Html.Partial("Delete", vmHuesped)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

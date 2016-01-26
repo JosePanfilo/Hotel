@@ -3,7 +3,7 @@
     $("a#enlaceEditar").click(function () {
         //Se obtiene  el numero de huesped a consultar
         var enlaceClickeado = $(this);
-        var huespedId = enlaceClickeado.attr("huespedId");
+        var huespedId = enlaceClickeado.attr("huespedID");
 
         //Definir la transaccion AJAX al server
         $.ajax({
@@ -11,13 +11,13 @@
             contentType: "application/html; charset=utf-8",
             type: "GET",
             dataType: "html",
-            data: { huespedId: huespedId } //Dato enviado al server
+            data: { uespedID: huespedId } //Dato enviado al server
         }).success(function (result) {
             //Senobtiene la respuesta del servidor en forma de objeto
             var huesped = JSON.parse(result);
 
             //Con la informacion recibida, se rellena el formulario
-            $("#modalEditar #huespedID").val(huesped.huespedId);
+            $("#modalEditar #huespedID").val(huesped.huespedID);
             $("#modalEditar #nombre").val(huesped.nombre);
             $("#modalEditar #apellidoP").val(huesped.apellidoP);
             $("#modalEditar #apellidoM").val(huesped.apellidoM);
