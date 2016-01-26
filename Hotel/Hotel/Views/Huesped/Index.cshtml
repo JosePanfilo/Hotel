@@ -8,6 +8,8 @@
 }
 
 <h2>Index</h2>
+<!-- Trigger the modal with a button -->
+<a data-toggle="modal" data-target="#modalAlta">Nuevo Huesped</a>
 
 @using (Html.BeginForm(null, null, FormMethod.Get))
 {
@@ -15,8 +17,7 @@
     <button>Buscar</button>
 }
 
-<!-- Trigger the modal with a button -->
-<a data-toggle="modal" data-target="#modalAlta">Nuevo Huesped</a>
+
 
         @*
         <p>
@@ -100,7 +101,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE DETALLES DE Huesped-->
-                Html.Partial("Details", vmHuesped)
+                @Html.Partial("Details", vmHuesped)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -140,7 +141,7 @@
                 <h4 class="modal-title">Eliminar</h4>
             </div>
             <div class="modal-body">
-                Html.Partial("Delete", vmHuesped)
+                @*@Html.Partial("Delete", vmHuesped)*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

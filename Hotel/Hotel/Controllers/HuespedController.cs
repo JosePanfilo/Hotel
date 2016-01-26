@@ -187,7 +187,7 @@ namespace Hotel.Controllers
             {
                 db.Entry(huesped).State = EntityState.Modified;
                 int c = db.SaveChanges();
-                mensaje = "Se ha editado los datos del alumno satisfactoriamente";
+                mensaje = "Se han editado los datos del huesped satisfactoriamente";
             }
             catch (Exception exc)
             {

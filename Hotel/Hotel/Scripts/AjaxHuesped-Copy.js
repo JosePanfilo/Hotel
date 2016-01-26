@@ -1,6 +1,6 @@
 ﻿$().ready(function () {
 
-    //Abrir pantalla de Editar y mostrar datos de alumno
+    //Abrir pantalla de Editar y mostrar datos de huesped
     $("a#enlaceEditar").click(function () {
         //Se obtiene el numero de matricula a consultar
         var enlaceClickeado = $(this);
@@ -15,13 +15,13 @@
             data: { huespedID: id } //Dato enviado al server
         }).success(function (result) { //result = {mensaje, status}
             //Se obtiene la respuesta del server en forma de objeto
-            var alumno = JSON.parse(result);
+            var huesped = JSON.parse(result);
 
             //Con la información recibida, se rellena el formulario
-            $("#modalEditar #huespedID").val(alumno.noMatricula);
-            $("#modalEditar #nombre").val(alumno.nombre);
-            $("#modalEditar #apellidoP").val(alumno.apellidoP);
-            $("#modalEditar #apellidoM").val(alumno.apellidoM);
+            $("#modalEditar #huespedID").val(huesped.huespedID);
+            $("#modalEditar #nombre").val(huesped.nombre);
+            $("#modalEditar #apellidoP").val(huesped.apellidoP);
+            $("#modalEditar #apellidoM").val(huesped.apellidoM);
             //fechaRecibida = new Date(alumno.fechaNac);
             //$("#modalEditar #fechaNac").val(fechaRecibida);
             //document.getElementById("fechaNac").valueAsDate = fechaRecibida;
