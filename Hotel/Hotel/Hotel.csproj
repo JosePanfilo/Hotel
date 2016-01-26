@@ -257,6 +257,7 @@
     <Content Include="Views\Habitacion\Details.cshtml" />
     <Content Include="Views\Habitacion\Edit.cshtml" />
     <Content Include="Views\Habitacion\Index.cshtml" />
+    <Content Include="Views\Huesped\PruebaAjax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
