@@ -14,20 +14,21 @@ namespace Hotel.Controllers
     public class HuespedController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+       
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public JsonResult AjaxIndex(String strBuscado)
         {
             //var huespedes = db.Huespeds.ToList();
 
-            var huespedes = from Huesped in db.Huespeds
-                          where Huesped.nombre.Contains(strBuscado)
+            var huespedes = from huesped in db.Huespeds
+                            where huesped.nombre.Contains(strBuscado)
                           select new
                           {
-                              huespedID = Huesped.huespedID,
-                              nombre = Huesped.nombre,
-                              apellidoP = Huesped.apellidoP,
-                              apellidoM = Huesped.apellidoM,
-                              telefono = Huesped.telefono
+                              huespedID = huesped.huespedID,
+                              nombre = huesped.nombre,
+                              apellidoP = huesped.apellidoP,
+                              apellidoM = huesped.apellidoM,
+                              telefono = huesped.telefono
                           };
 
             return Json(huespedes, JsonRequestBehavior.AllowGet);
@@ -35,8 +36,6 @@ namespace Hotel.Controllers
 
         public JsonResult EntregarDatos()
         {
-            //var listaJson = from Huesped in 
-            //return Json(db.carreras.ToList(),JsonRequestBehavior.AllowGet);
             JavaScriptSerializer jss = new JavaScriptSerializer();
             String dato = "Esto viene del server";
             return Json(jss.Serialize(dato), JsonRequestBehavior.AllowGet);
@@ -44,33 +43,32 @@ namespace Hotel.Controllers
 
         // GET: Huesped
         //Valor 
-       ///////// [Authorize(Roles = "Administrador, Capturista")]
         public ActionResult JsonIndex(String strBuscado = "")
         {
             //Se declara una lista de alumnos
-            IEnumerable<Huesped> Huespedes;
+            IEnumerable<Huesped> huespedes;
 
             //Se busca una cadena de caracteres por nombre
-            Huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
+            huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
 
-            IEnumerable<VMHuesped> vmHuesped = from Huesped in db.Huespeds
-                                               where Huesped.nombre.Contains(strBuscado)
-                                               select new VMHuesped(Huesped);
+            IEnumerable<VMHuesped> vmHuesped = from huesped in db.Huespeds
+                                               where huesped.nombre.Contains(strBuscado)
+                                               select new VMHuesped(huesped);
 
             //Se envia datos principales a vista
-            return View(Huespedes.ToList());
+            return View(huespedes.ToList());
         }
 
         // GET: Huesped
-        public ActionResult Index(String strBuscado)
+        public ActionResult Index(String strBuscado = "")
         {
             //Se declara una lista de Huespedes
             IEnumerable<Huesped> huespedes;
 
             //Se busca una cadena de caracteres por nombre
             huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
-            
-            return View(db.Huespeds.ToList());
+
+            return View(huespedes.ToList());
         }
 
         // GET: Huesped/Details/5
@@ -89,7 +87,6 @@ namespace Hotel.Controllers
         }
 
         // GET: Alumno/Details/5
-       //////// [Authorize(Roles = "Administrador, Capturista")]
         public JsonResult AjaxDetails(int? id)
         {
             Huesped huesped = db.Huespeds.Find(id);
@@ -100,7 +97,6 @@ namespace Hotel.Controllers
 
         // GET: Alumno/Details/5
         [HttpPost]
-       ////////// [Authorize(Roles = "Administrador, Capturista")]
         public JsonResult AjaxDetails(Huesped huesped)
         {
             db.Entry(huesped).State = EntityState.Modified;
