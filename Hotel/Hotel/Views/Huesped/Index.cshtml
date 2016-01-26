@@ -25,7 +25,6 @@
         *@
 
 <table id="tablaHuesped" class="table">
-    <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)
@@ -41,15 +40,9 @@
         </th>
         <th></th>
     </tr>
-    </thead>
-    <tbody>
 
 @foreach (var item in Model) {
     <tr>
-        <!--<td>
-                @Html.RadioButton("seleccion", item.huespedID)
-            </td>-->
-
         <td>
             @Html.DisplayFor(modelItem => item.nombre)
         </td>
@@ -63,13 +56,13 @@
             @Html.DisplayFor(modelItem => item.telefono)
         </td>
         <td>
-            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" huespedID="@item.huespedID">Detalles</a> |
-            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" huespedID="@item.huespedID">Borrar</a> |
-            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" huespedID="@item.huespedID">Editar</a>
+            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" huespedId="@item.huespedID">Detalles</a> |
+            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" huespedId="@item.huespedID">Borrar</a> |
+            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" huespedId="@item.huespedID">Editar</a>
         </td>
     </tr>
 }
-    </tbody>
+
 </table>
 <!------------------------------------------------------------------------------------------------------->
                         <!--MODAL DE CREATE-->
@@ -107,7 +100,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE DETALLES DE Huesped-->
-                @*@Html.Partial("Details", vmHuesped)*@
+                Html.Partial("Details", vmHuesped)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -130,7 +123,7 @@
                 @Html.Partial("Edit", nuevoHuesped)
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="btnEditar" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -147,7 +140,7 @@
                 <h4 class="modal-title">Eliminar</h4>
             </div>
             <div class="modal-body">
-                @*Html.Partial("Delete", vmHuesped)*@
+                Html.Partial("Delete", vmHuesped)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -8,31 +8,69 @@ using System.Web;
 using System.Web.Mvc;
 using Hotel.Models;
 using System.Web.Script.Serialization;
-using Hotel.DAL;
 
 namespace Hotel.Controllers
 {
     public class HuespedController : Controller
     {
-        private Contexto db = new Contexto();
-        public ActionResult PruebaAjax()
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        public JsonResult AjaxIndex(String strBuscado)
         {
-            return View();
+            //var huespedes = db.Huespeds.ToList();
+
+            var huespedes = from Huesped in db.Huespeds
+                          where Huesped.nombre.Contains(strBuscado)
+                          select new
+                          {
+                              huespedID = Huesped.huespedID,
+                              nombre = Huesped.nombre,
+                              apellidoP = Huesped.apellidoP,
+                              apellidoM = Huesped.apellidoM,
+                              telefono = Huesped.telefono
+                          };
+
+            return Json(huespedes, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult EntregarDatos()
         {
-          
+            //var listaJson = from Huesped in 
+            //return Json(db.carreras.ToList(),JsonRequestBehavior.AllowGet);
             JavaScriptSerializer jss = new JavaScriptSerializer();
             String dato = "Esto viene del server";
             return Json(jss.Serialize(dato), JsonRequestBehavior.AllowGet);
         }
+
         // GET: Huesped
-        public ActionResult Index(String strBuscado = "")
+        //Valor 
+       ///////// [Authorize(Roles = "Administrador, Capturista")]
+        public ActionResult JsonIndex(String strBuscado = "")
         {
-            IEnumerable<Huesped> huesped;
-            huesped = db.huesped.Where(algo => algo.nombre.Contains(strBuscado));
-            return View(db.huesped.ToList());
+            //Se declara una lista de alumnos
+            IEnumerable<Huesped> Huespedes;
+
+            //Se busca una cadena de caracteres por nombre
+            Huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
+
+            IEnumerable<VMHuesped> vmHuesped = from Huesped in db.Huespeds
+                                               where Huesped.nombre.Contains(strBuscado)
+                                               select new VMHuesped(Huesped);
+
+            //Se envia datos principales a vista
+            return View(Huespedes.ToList());
+        }
+
+        // GET: Huesped
+        public ActionResult Index(String strBuscado)
+        {
+            //Se declara una lista de Huespedes
+            IEnumerable<Huesped> huespedes;
+
+            //Se busca una cadena de caracteres por nombre
+            huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
+            
+            return View(db.Huespeds.ToList());
         }
 
         // GET: Huesped/Details/5
@@ -42,25 +80,27 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.huesped.Find(id);
+            Huesped huesped = db.Huespeds.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
             }
             return View(huesped);
         }
-        //GET: Huesped/Details/5
+
         // GET: Alumno/Details/5
+       //////// [Authorize(Roles = "Administrador, Capturista")]
         public JsonResult AjaxDetails(int? id)
         {
-            Huesped huesped = db.huesped.Find(id);
+            Huesped huesped = db.Huespeds.Find(id);
             VMHuesped vmHuesped = new VMHuesped(huesped);
 
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Alumno/Details/5
-       [HttpPost]
+        [HttpPost]
+       ////////// [Authorize(Roles = "Administrador, Capturista")]
         public JsonResult AjaxDetails(Huesped huesped)
         {
             db.Entry(huesped).State = EntityState.Modified;
@@ -70,6 +110,7 @@ namespace Hotel.Controllers
 
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
+
         // GET: Huesped/Create
         public ActionResult Create()
         {
@@ -85,7 +126,7 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.huesped.Add(huesped);
+                db.Huespeds.Add(huesped);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -100,12 +141,11 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.huesped.Find(id);
+            Huesped huesped = db.Huespeds.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
             }
-
             return View(huesped);
         }
 
@@ -124,16 +164,20 @@ namespace Hotel.Controllers
             }
             return View(huesped);
         }
+
+        [HttpGet]
         public JsonResult AjaxEdit(int huespedID = 0)
         {
             /*Un objeto instanciado del modelo de datos*/
-            Huesped huesped = db.huesped.Find(huespedID);
+            Huesped huesped = db.Huespeds.Find(huespedID);
 
             /*Necesito una instancia del modelo de vista*/
             VMHuesped vmHuesped = new VMHuesped(huesped);
 
+            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
         public JsonResult AjaxEdit(Huesped huesped)
         {
@@ -154,7 +198,6 @@ namespace Hotel.Controllers
             return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
 
-
         // GET: Huesped/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -162,7 +205,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.huesped.Find(id);
+            Huesped huesped = db.Huespeds.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
@@ -175,8 +218,8 @@ namespace Hotel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Huesped huesped = db.huesped.Find(id);
-            db.huesped.Remove(huesped);
+            Huesped huesped = db.Huespeds.Find(id);
+            db.Huespeds.Remove(huesped);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
