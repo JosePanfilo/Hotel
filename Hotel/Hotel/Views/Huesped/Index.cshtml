@@ -7,11 +7,11 @@
     Hotel.Models.VMHuesped vmHuesped = new Hotel.Models.VMHuesped(nuevoHuesped);
 }
 
-<h2>Index</h2>\
+<h2>Index</h2>
 
 @using (Html.BeginForm(null, null, FormMethod.Get))
 {
-    <input type="text" name="strBuscado" value="" placeholder="Buscar Alumno" />
+    <input type="text" name="strBuscado" value="" placeholder="Buscar Huesped" />
     <button>Buscar</button>
 }
 
@@ -25,6 +25,7 @@
         *@
 
 <table id="tablaHuesped" class="table">
+    <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)
@@ -40,9 +41,15 @@
         </th>
         <th></th>
     </tr>
+    </thead>
+    <tbody>
 
 @foreach (var item in Model) {
     <tr>
+        <!--<td>
+                @Html.RadioButton("seleccion", item.huespedID)
+            </td>-->
+
         <td>
             @Html.DisplayFor(modelItem => item.nombre)
         </td>
@@ -56,13 +63,13 @@
             @Html.DisplayFor(modelItem => item.telefono)
         </td>
         <td>
-            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" huespedId="@item.huespedID">Detalles</a> |
-            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" huespedId="@item.huespedID">Borrar</a> |
-            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" huespedId="@item.huespedID">Editar</a>
+            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" huespedID="@item.huespedID">Detalles</a> |
+            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" huespedID="@item.huespedID">Borrar</a> |
+            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" huespedID="@item.huespedID">Editar</a>
         </td>
     </tr>
 }
-
+    </tbody>
 </table>
 <!------------------------------------------------------------------------------------------------------->
                         <!--MODAL DE CREATE-->
@@ -100,7 +107,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE DETALLES DE Huesped-->
-                @Html.Partial("Details", vmHuesped)
+                @*@Html.Partial("Details", vmHuesped)*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

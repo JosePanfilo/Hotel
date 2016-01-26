@@ -8,12 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using Hotel.Models;
 using System.Web.Script.Serialization;
+using Hotel.DAL;
 
 namespace Hotel.Controllers
 {
     public class HuespedController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private Contexto db = new Contexto();
         public ActionResult PruebaAjax()
         {
             return View();
@@ -49,6 +50,7 @@ namespace Hotel.Controllers
             return View(huesped);
         }
         //GET: Huesped/Details/5
+        // GET: Alumno/Details/5
         public JsonResult AjaxDetails(int? id)
         {
             Huesped huesped = db.huesped.Find(id);
@@ -56,12 +58,16 @@ namespace Hotel.Controllers
 
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+
+        // GET: Alumno/Details/5
+       [HttpPost]
         public JsonResult AjaxDetails(Huesped huesped)
         {
             db.Entry(huesped).State = EntityState.Modified;
-            db.SaveChanges;
+            db.SaveChanges();
+
             VMHuesped vmHuesped = new VMHuesped(huesped);
+
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
         // GET: Huesped/Create
@@ -128,6 +134,26 @@ namespace Hotel.Controllers
 
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult AjaxEdit(Huesped huesped)
+        {
+            String mensaje = String.Empty;
+
+            try
+            {
+                db.Entry(huesped).State = EntityState.Modified;
+                int c = db.SaveChanges();
+                mensaje = "Se ha editado los datos del alumno satisfactoriamente";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+
+
+            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+        }
+
 
         // GET: Huesped/Delete/5
         public ActionResult Delete(int? id)
