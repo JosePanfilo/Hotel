@@ -22,11 +22,7 @@
             $("#modalEditar #nombre").val(huesped.nombre);
             $("#modalEditar #apellidoP").val(huesped.apellidoP);
             $("#modalEditar #apellidoM").val(huesped.apellidoM);
-            //fechaRecibida = new Date(alumno.fechaNac);
-            //$("#modalEditar #fechaNac").val(fechaRecibida);
-            //document.getElementById("fechaNac").valueAsDate = fechaRecibida;
-            //$("#modalEditar #fechaNac")[0].valueAsDate = fechaRecibida;
-            //$("#modalEditar #grupoID").val(alumno.grupoID);
+            $("#modalEditar #telefono").val(huesped.telefono);
 
         }).error(function (xhr, status) {
             /*Notificar al usuario de un error de comunicacion
@@ -45,8 +41,7 @@
             nombre: $("#nombre").val(),
             apellidoP: $("#apellidoP").val(),
             apellidoM: $("#apellidoM").val(),
-            //fechaNac: $("#fechaNac").val(),
-            //grupoID: $("#grupoID").val(),
+            telefono: $("#telefono").val(),
         }
 
         $.ajax({

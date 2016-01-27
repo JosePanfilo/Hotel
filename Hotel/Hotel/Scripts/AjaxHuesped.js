@@ -57,10 +57,6 @@
             $("#modalEditar #apellidoP").val(huesped.apellidoP);
             $("#modalEditar #apellidoM").val(huesped.apellidoM);
             $("#modalEditar #telefono").val(huesped.telefono);
-            //$("#modalEditar #fechaNac").val(fechaRecibida);
-            //document.getElementById("fechaNac").valueAsDate = fechaRecibida;
-            //$("#modalEditar #fechaNac")[0].valueAsDate = fechaRecibida;
-            //$("#modalEditar #grupoID").val(alumno.grupoID);
 
         }).error(function (xhr, status) {
             /*Notificar al usuario de un error de comunicacion
@@ -79,7 +75,6 @@
             apellidoP: $("#modalEditar #apellidoP").val(),
             apellidoM: $("#modalEditar #apellidoM").val(),
             telefono: $("#modalEditar #telefono").val(),
-            //grupoID: $("#modalEditar #grupoID").val(),
         };
 
         $.ajax({
