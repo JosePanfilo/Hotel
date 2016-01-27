@@ -23,4 +23,3 @@ function huesped_llenarFormaDetalles(result) {
 function notificarError(status) {
     alert(status)
 }
-})
