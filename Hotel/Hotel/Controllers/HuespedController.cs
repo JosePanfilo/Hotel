@@ -54,33 +54,29 @@ namespace Hotel.Controllers
             return Json(huesped, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Huesped/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+     
 
          //POST: Huesped/Create
          //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
          //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
          //GET: Huesped/Create
-                public ActionResult Create()
+         public ActionResult Create()
                 {
-                    return View();
+               return View();
                 }
 
                 // POST: Huesped/Create
                 // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
                 // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-                [HttpPost]
+           [HttpPost]
                 //[ValidateAntiForgeryToken]
-                public JsonResult Create(Huesped huesped)
+         public JsonResult Create(Huesped huesped)
                 {
-                    if (ModelState.IsValid)
-                    {
-                        db.huesped.Add(huesped);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+            if (ModelState.IsValid)
+           {
+               db.huesped.Add(huesped);
+               db.SaveChanges();
+              return RedirectToAction("Index");
                     }
 
                     return View(huesped);
