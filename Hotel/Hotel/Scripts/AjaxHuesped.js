@@ -38,7 +38,7 @@
     $("a#enlaceEditar").click(function () {
         //Se obtiene el numero de matricula a consultar
         var enlaceClickeado = $(this);
-        var id = enlaceClickeado.attr("huespdID");
+        var id = enlaceClickeado.attr("huespdId");
 
         //Definir la transaccione AJAX al server
         $.ajax({
@@ -52,7 +52,7 @@
             var huesped = JSON.parse(result);
 
             //Con la información recibida, se rellena el formulario
-            $("#modalEditar #huespedID").val(huesped.huespedID);
+            $("#modalEditar #noMatricula").val(huesped.huespedID);
             $("#modalEditar #nombre").val(huesped.nombre);
             $("#modalEditar #apellidoP").val(huesped.apellidoP);
             $("#modalEditar #apellidoM").val(huesped.apellidoM);
