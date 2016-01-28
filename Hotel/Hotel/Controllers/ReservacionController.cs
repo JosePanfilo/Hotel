@@ -14,12 +14,6 @@ namespace Hotel.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        //public JsonResult AjaxIndex(String strBuscado)
-        //{
-        //    var Reservacion =  from Reservacion in db.reservacion
-        //                       where Reservacion.reservacionID.ToString.Contains(strBuscado)
-        //}
-
         // GET: Reservacion
         public ActionResult Index()
         {
