@@ -7,7 +7,7 @@
 }
 
 <h2>Index</h2>
-<button id="btnCrear" type="button" data-toggle="modal" data-target="#modalAlta">Nuevo Huesped</button>
+<button id="btnCreahr" type="button" data-toggle="modal" data-target="#modalAlta">Nuevo Huesped</button>
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
@@ -93,7 +93,7 @@
             </div>
             <div class="modal-body">
                 <div></div>
-                <div id="detalleHuesped"">
+                <div id="detalleHuesped">
                     <!-- VISTA DE DETALLES DE Huesped-->
                     @*@Html.Partial("Details", vmHuesped)*@
                 </div>
@@ -119,7 +119,7 @@
                 @Html.Partial("Edit", nuevoHuesped)
             </div>
             <div class="modal-footer">
-                <button id="btnEditar" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -136,10 +136,12 @@
                 <h4 class="modal-title">Eliminar</h4>
             </div>
             <div class="modal-body">
-                @*@Html.Partial("Delete", vmHuesped)*@
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div id="eliminarHuesped">
+                    @*@Html.Partial("Delete", vmHuesped)*@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

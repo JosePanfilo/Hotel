@@ -16,7 +16,7 @@
     //Si todo salio bien en la transaccion ajax entra en .success
         }).success(function (result) {
             //se crea un a nueva variable de tipo tbody en la tabla de la vista de index Huesped
-            var tablaHuesped = $("tablaHuesped tbody");
+            var tablaHuesped = $("#tablaHuesped tbody");
             //se limpia la tabla
             tablaHuesped.html("");
             //se transforma el archivo Json que biene en formato json de la base de datos de cadena de string a formato json puro
@@ -69,7 +69,7 @@
             $("#modalEditar #telefono").val(huesped.telefono);
         })
     })//--------------------------------------------------------------//
-    $("#btnEditar").click(function () {
+    $("#modalEditar #btnEditar ").click(function () {
         huespedModificado = {
             huespedID: $("#modalEditar #huespedID").val(),
             nombre: $("#modalEditar #nombre").val(),
