@@ -57,14 +57,14 @@ namespace Hotel.Controllers
          //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
          //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
          //GET: Huesped/Create
-         public ActionResult Create()
-                {
-               return View();
-                }
+         //public ActionResult Create()
+         //       {
+         //      return View();
+         //       }
 
-                // POST: Huesped/Create
-                // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-                // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+         //       // POST: Huesped/Create
+         //       // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+         //       // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
            [HttpPost]
                 //[ValidateAntiForgeryToken]
          public JsonResult Create(Huesped huesped)
