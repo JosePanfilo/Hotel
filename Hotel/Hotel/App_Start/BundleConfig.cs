@@ -14,7 +14,7 @@ namespace Hotel
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
             bundles.Add(new ScriptBundle("~/bundles/personalizacion").Include(
-                        "~/Scripts/AjaxHuepesd.js"
+                        "~/Scripts/AjaxHuesped.js"
                         //"~/Scripts/Animaciones.js",
                         //"~/Scripts/AjaxCarreras.js"
                         ));
@@ -26,7 +26,10 @@ namespace Hotel
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js","~/Scripts/CRUDHuesped.js"));
+            bundles.Add(new ScriptBundle("~/bundles/misjs").Include(
+                //"~/Scripts/ajaxCrud.js",
+                   "~/Scripts/CRUDHuesped.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
