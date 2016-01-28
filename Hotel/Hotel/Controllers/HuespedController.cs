@@ -86,7 +86,7 @@ namespace Hotel.Controllers
             return View(huesped);
         }
 
-        // GET: Alumno/Details/5
+        // GET: Huesped/Details/5
         public JsonResult AjaxDetails(int? id)
         {
             Huesped huesped = db.Huespeds.Find(id);
