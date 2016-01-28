@@ -43,8 +43,6 @@ namespace Hotel.Controllers
         }
 
         // GET: Huesped
-        //Valor 
-       ///////// [Authorize(Roles = "Administrador, Capturista")]
         public ActionResult JsonIndex(String strBuscado = "")
         {
             //Se declara una lista de alumnos
@@ -88,8 +86,7 @@ namespace Hotel.Controllers
             return View(huesped);
         }
 
-        // GET: Alumno/Details/5
-       //////// [Authorize(Roles = "Administrador, Capturista")]
+        // GET: Huesped/Details/5
         public JsonResult AjaxDetails(int? id)
         {
             Huesped huesped = db.Huespeds.Find(id);
@@ -98,9 +95,8 @@ namespace Hotel.Controllers
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Alumno/Details/5
+        // POST: Huesped/Details/5
         [HttpPost]
-       ////////// [Authorize(Roles = "Administrador, Capturista")]
         public JsonResult AjaxDetails(Huesped huesped)
         {
             db.Entry(huesped).State = EntityState.Modified;
@@ -166,16 +162,19 @@ namespace Hotel.Controllers
         }
 
         [HttpGet]
-        public JsonResult AjaxEdit(int huespedID = 0)
+        public JsonResult AjaxEdit(int? id)
         {
-            /*Un objeto instanciado del modelo de datos*/
-            Huesped huesped = db.Huespeds.Find(huespedID);
+            ///*Un objeto instanciado del modelo de datos*/
+            //Huesped huesped = db.Huespeds.Find(huespedID);
 
-            /*Necesito una instancia del modelo de vista*/
-            VMHuesped vmHuesped = new VMHuesped(huesped);
+            ///*Necesito una instancia del modelo de vista*/
+            //VMHuesped vmHuesped = new VMHuesped(huesped);
 
-            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
-            return Json(vmHuesped, JsonRequestBehavior.AllowGet);
+            ////return Json(vmAlumno, JsonRequestBehavior.AllowGet);
+            //return Json(vmHuesped, JsonRequestBehavior.AllowGet);
+
+            Huesped huespedes = db.Huespeds.Find(id);
+            return Json(huespedes, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
