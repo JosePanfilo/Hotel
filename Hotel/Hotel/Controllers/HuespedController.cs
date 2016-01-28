@@ -20,80 +20,97 @@ namespace Hotel.Controllers
         {
             //var huespedes = db.Huespeds.ToList();
 
-            var huespedes = from huesped in db.Huespeds
-                            where huesped.nombre.Contains(strBuscado)
+            var huespedes = from Huesped in db.Huespeds
+                            where Huesped.nombre.Contains(strBuscado)
                           select new
                           {
-                              huespedID = huesped.huespedID,
-                              nombre = huesped.nombre,
-                              apellidoP = huesped.apellidoP,
-                              apellidoM = huesped.apellidoM,
-                              telefono = huesped.telefono
+                              huespedID = Huesped.huespedID,
+                              nombre = Huesped.nombre,
+                              apellidoP = Huesped.apellidoP,
+                              apellidoM = Huesped.apellidoM,
+                              telefono = Huesped.telefono
                           };
 
             return Json(huespedes, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult EntregarDatos()
-        {
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            String dato = "Esto viene del server";
-            return Json(jss.Serialize(dato), JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult EntregarDatos()
+        //{
+        //    JavaScriptSerializer jss = new JavaScriptSerializer();
+        //    String dato = "Esto viene del server";
+        //    return Json(jss.Serialize(dato), JsonRequestBehavior.AllowGet);
+        //}
 
         // GET: Huesped
         //Valor 
-        public ActionResult JsonIndex(String strBuscado = "")
-        {
-            //Se declara una lista de alumnos
-            IEnumerable<Huesped> huespedes;
+        //public ActionResult JsonIndex(String strBuscado = "")
+        //{
+        //    //Se declara una lista de alumnos
+        //    IEnumerable<Huesped> huespedes;
 
-            //Se busca una cadena de caracteres por nombre
-            huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
+        //    //Se busca una cadena de caracteres por nombre
+        //    huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
 
-            IEnumerable<VMHuesped> vmHuesped = from huesped in db.Huespeds
-                                               where huesped.nombre.Contains(strBuscado)
-                                               select new VMHuesped(huesped);
+        //    IEnumerable<VMHuesped> vmHuesped = from huesped in db.Huespeds
+        //                                       where huesped.nombre.Contains(strBuscado)
+        //                                       select new VMHuesped(huesped);
 
-            //Se envia datos principales a vista
-            return View(huespedes.ToList());
-        }
+        //    //Se envia datos principales a vista
+        //    return View(huespedes.ToList());
+        //}
 
         // GET: Huesped
-        public ActionResult Index(String strBuscado = "")
+        public ActionResult Index(/*String strBuscado = ""*/)
         {
-            //Se declara una lista de Huespedes
-            IEnumerable<Huesped> huespedes;
+            ////Se declara una lista de Huespedes
+            //IEnumerable<Huesped> huespedes;
 
-            //Se busca una cadena de caracteres por nombre
-            huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
+            ////Se busca una cadena de caracteres por nombre
+            //huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
 
-            return View(huespedes.ToList());
+            return View(db.Huespeds.ToList());
         }
 
         // GET: Huesped/Details/5
-        public ActionResult Details(int? id)
+        public JsonResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            /*Un objeto instanciado del modelo de datos*/
             Huesped huesped = db.Huespeds.Find(id);
-            if (huesped == null)
-            {
-                return HttpNotFound();
-            }
-            return View(huesped);
+
+            /*Necesito una instancia del modelo de vista*/
+            //VMAlumno vmAlumno = new VMAlumno(alumno);
+
+            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
+            return Json(huesped, JsonRequestBehavior.AllowGet);
+
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //Huesped huesped = db.Huespeds.Find(id);
+            //if (huesped == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(huesped);
         }
 
         // GET: Alumno/Details/5
-        public JsonResult AjaxDetails(int? id)
-        {
-            Huesped huesped = db.Huespeds.Find(id);
-            VMHuesped vmHuesped = new VMHuesped(huesped);
+        //public JsonResult AjaxDetails(int? id)
+        //{
+        //    Huesped huesped = db.Huespeds.Find(id);
+        //    VMHuesped vmHuesped = new VMHuesped(huesped);
 
-            return Json(vmHuesped, JsonRequestBehavior.AllowGet);
+        //    return Json(vmHuesped, JsonRequestBehavior.AllowGet);
+        //}
+
+
+        //GET: Huesped/Create
+        public ActionResult Create()
+        {
+            return View();
         }
+
 
         // GET: Alumno/Details/5
         [HttpPost]
@@ -148,9 +165,37 @@ namespace Hotel.Controllers
         // POST: Huesped/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Edit(int? id/*[Bind(Include = "huespedID,nombre,apellidoP,apellidoM,telefono")] Huesped huesped*/)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Huesped huesped = db.Huespeds.Find(id);
+            if (huesped == null)
+            {
+                return HttpNotFound();
+            }
+            return View(huesped);
+
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(huesped).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            //return View(huesped);
+        }
+
+        // POST: Libro/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "huespedID,nombre,apellidoP,apellidoM,telefono")] Huesped huesped)
+        public ActionResult Edit([Bind(Include = "huespedID,nombre,isbn,autor,editorial,descripcion,año,noEjemplares")] Huesped huesped)
         {
             if (ModelState.IsValid)
             {
@@ -168,12 +213,14 @@ namespace Hotel.Controllers
             Huesped huesped = db.Huespeds.Find(huespedID);
 
             /*Necesito una instancia del modelo de vista*/
-            VMHuesped vmHuesped = new VMHuesped(huesped);
+            //VMHuesped vmHuesped = new VMHuesped(huesped);
 
             //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
-            return Json(vmHuesped, JsonRequestBehavior.AllowGet);
+            return Json(huesped, JsonRequestBehavior.AllowGet);
         }
-
+        //////////////////////7
+        ///ME EH QUEDADO AQUI
+        //////////////
         [HttpPost]
         public JsonResult AjaxEdit(Huesped huesped)
         {
@@ -210,15 +257,87 @@ namespace Hotel.Controllers
         }
 
         // POST: Huesped/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        [HttpGet]
+        public JsonResult DeleteConfirmed(int libroId = 0)
         {
-            Huesped huesped = db.Huespeds.Find(id);
-            db.Huespeds.Remove(huesped);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            String mensaje = String.Empty;
+            try
+            {
+                Huesped huesped = db.Huespeds.Find(libroId);
+                db.Huespeds.Remove(huesped);
+                db.SaveChanges();
+                mensaje = "Se ha eliminado el libro satisfactoriamente";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult AjaxDelete(int huespedID = 0)
+        {
+            /*Un objeto instanciado del modelo de datos*/
+            Huesped huesped = db.Huespeds.Find(huespedID);
+
+            /*Necesito una instancia del modelo de vista*/
+            //VMAlumno vmAlumno = new VMAlumno(alumno);
+
+            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
+            return Json(huesped, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: Libro/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Huesped huesped = db.Huespeds.Find(id);
+        //    if (huesped == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(huesped);
+        //}
+
+        [HttpPost]
+        public JsonResult AjaxDelete(Huesped huesped)
+        {
+            String mensaje = String.Empty;
+
+
+            try
+            {
+                db.Entry(huesped).State = EntityState.Deleted;
+                int c = db.SaveChanges();
+                mensaje = "Se ha eliminado libro correctamente";
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+
+
+            }
+
+
+            //return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+
+            return Json("Response from Delete", JsonRequestBehavior.AllowGet);
+
+        }
+
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Huesped huesped = db.Huespeds.Find(id);
+        //    db.Huespeds.Remove(huesped);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
