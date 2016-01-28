@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Hotel.DAL;
 using Hotel.Models;
 using System.Web.Script.Serialization;
 
@@ -13,112 +14,81 @@ namespace Hotel.Controllers
 {
     public class HuespedController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private Contexto db = new Contexto();
        
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public JsonResult AjaxIndex(String strBuscado)
         {
             //var huespedes = db.Huespeds.ToList();
 
-            var huespedes = from Huesped in db.Huespeds
-                            where Huesped.nombre.Contains(strBuscado)
+            var huespedes = from huesped in db.huesped
+                            where huesped.nombre.Contains(strBuscado)
                           select new
                           {
-                              huespedID = Huesped.huespedID,
-                              nombre = Huesped.nombre,
-                              apellidoP = Huesped.apellidoP,
-                              apellidoM = Huesped.apellidoM,
-                              telefono = Huesped.telefono
+                              huespedID = huesped.huespedID,
+                              nombre = huesped.nombre,
+                              apellidoP = huesped.apellidoP,
+                              apellidoM = huesped.apellidoM,
+                              telefono = huesped.telefono
                           };
 
             return Json(huespedes, JsonRequestBehavior.AllowGet);
         }
 
-        //public JsonResult EntregarDatos()
-        //{
-        //    JavaScriptSerializer jss = new JavaScriptSerializer();
-        //    String dato = "Esto viene del server";
-        //    return Json(jss.Serialize(dato), JsonRequestBehavior.AllowGet);
-        //}
+        public JsonResult EntregarDatos()
+        {
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            String dato = "Esto viene del server";
+            return Json(jss.Serialize(dato), JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Huesped
         //Valor 
-        //public ActionResult JsonIndex(String strBuscado = "")
-        //{
-        //    //Se declara una lista de alumnos
-        //    IEnumerable<Huesped> huespedes;
+        public ActionResult JsonIndex(String strBuscado = "")
+        {
+            //Se declara una lista de alumnos
+            IEnumerable<Huesped> huespedes;
 
-        //    //Se busca una cadena de caracteres por nombre
-        //    huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
+            //Se busca una cadena de caracteres por nombre
+            huespedes = db.huesped.Where(algo => algo.nombre.Contains(strBuscado));
 
-        //    IEnumerable<VMHuesped> vmHuesped = from huesped in db.Huespeds
-        //                                       where huesped.nombre.Contains(strBuscado)
-        //                                       select new VMHuesped(huesped);
+            IEnumerable<VMHuesped> vmHuesped = from huesped in db.huesped
+                                               where huesped.nombre.Contains(strBuscado)
+                                               select new VMHuesped(huesped);
 
-        //    //Se envia datos principales a vista
-        //    return View(huespedes.ToList());
-        //}
+            //Se envia datos principales a vista
+            return View(huespedes.ToList());
+        }
 
         // GET: Huesped
-        public ActionResult Index(/*String strBuscado = ""*/)
+        public ActionResult Index(String strBuscado = "")
         {
-            ////Se declara una lista de Huespedes
-            //IEnumerable<Huesped> huespedes;
+            //Se declara una lista de Huespedes
+            IEnumerable<Huesped> huespedes;
 
-            ////Se busca una cadena de caracteres por nombre
-            //huespedes = db.Huespeds.Where(algo => algo.nombre.Contains(strBuscado));
+            //Se busca una cadena de caracteres por nombre
+            huespedes = db.huesped.Where(algo => algo.nombre.Contains(strBuscado));
 
-            return View(db.Huespeds.ToList());
+            return View(huespedes.ToList());
         }
 
         // GET: Huesped/Details/5
         public JsonResult Details(int? id)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Huesped huesped = db.huesped.Find(id);
+            if (huesped == null)
+            {
+                return HttpNotFound();
+            }
+            return View(huesped);
+        }
+
+        // GET: Alumno/Details/5
+        public JsonResult AjaxDetails(int? id)
         {
-            /*Un objeto instanciado del modelo de datos*/
             Huesped huesped = db.Huespeds.Find(id);
-
-            /*Necesito una instancia del modelo de vista*/
-            //VMAlumno vmAlumno = new VMAlumno(alumno);
-
-            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
-            return Json(huesped, JsonRequestBehavior.AllowGet);
-
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Huesped huesped = db.Huespeds.Find(id);
-            //if (huesped == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(huesped);
-        }
-
-        // GET: Alumno/Details/5
-        //public JsonResult AjaxDetails(int? id)
-        //{
-        //    Huesped huesped = db.Huespeds.Find(id);
-        //    VMHuesped vmHuesped = new VMHuesped(huesped);
-
-        //    return Json(vmHuesped, JsonRequestBehavior.AllowGet);
-        //}
-
-
-        //GET: Huesped/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-
-        // GET: Alumno/Details/5
-        [HttpPost]
-        public JsonResult AjaxDetails(Huesped huesped)
-        {
-            db.Entry(huesped).State = EntityState.Modified;
-            db.SaveChanges();
-
             VMHuesped vmHuesped = new VMHuesped(huesped);
 
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
@@ -139,7 +109,7 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Huespeds.Add(huesped);
+                db.huesped.Add(huesped);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -154,7 +124,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.Huespeds.Find(id);
+            Huesped huesped = db.huesped.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
@@ -213,14 +183,12 @@ namespace Hotel.Controllers
             Huesped huesped = db.Huespeds.Find(huespedID);
 
             /*Necesito una instancia del modelo de vista*/
-            //VMHuesped vmHuesped = new VMHuesped(huesped);
+            VMHuesped vmHuesped = new VMHuesped(huesped);
 
             //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
-            return Json(huesped, JsonRequestBehavior.AllowGet);
+            return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
-        //////////////////////7
-        ///ME EH QUEDADO AQUI
-        //////////////
+
         [HttpPost]
         public JsonResult AjaxEdit(Huesped huesped)
         {
@@ -248,7 +216,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.Huespeds.Find(id);
+            Huesped huesped = db.huesped.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
@@ -262,12 +230,9 @@ namespace Hotel.Controllers
         [HttpGet]
         public JsonResult DeleteConfirmed(int libroId = 0)
         {
-            String mensaje = String.Empty;
-            try
-            {
-                Huesped huesped = db.Huespeds.Find(libroId);
-                db.Huespeds.Remove(huesped);
-                db.SaveChanges();
+            Huesped huesped = db.Huespeds.Find(id);
+            db.Huespeds.Remove(huesped);
+            db.SaveChanges();
                 mensaje = "Se ha eliminado el libro satisfactoriamente";
             }
             catch (Exception exc)
@@ -348,4 +313,5 @@ namespace Hotel.Controllers
             base.Dispose(disposing);
         }
     }
-}
+
+
