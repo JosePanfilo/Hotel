@@ -47,7 +47,7 @@ namespace Hotel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "habitacionID,tamañoHabitacion,estado")] Habitacion habitacion)
+        public ActionResult Create([Bind(Include = "habitacionID,tamañoHabitacion,estado,costoNoche")] Habitacion habitacion)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace Hotel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "habitacionID,tamañoHabitacion,estado")] Habitacion habitacion)
+        public ActionResult Edit([Bind(Include = "habitacionID,tamañoHabitacion,estado,costoNoche")] Habitacion habitacion)
         {
             if (ModelState.IsValid)
             {
