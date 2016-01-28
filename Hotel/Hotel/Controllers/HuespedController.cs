@@ -105,13 +105,6 @@ namespace Hotel.Controllers
         //}
 
 
-        //GET: Huesped/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-
         // GET: Alumno/Details/5
         [HttpPost]
         public JsonResult AjaxDetails(Huesped huesped)
@@ -162,33 +155,33 @@ namespace Hotel.Controllers
             return View(huesped);
         }
 
-        // POST: Huesped/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id/*[Bind(Include = "huespedID,nombre,apellidoP,apellidoM,telefono")] Huesped huesped*/)
-        {
+        //// POST: Huesped/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ////[HttpPost]
+        ////[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int? id/*[Bind(Include = "huespedID,nombre,apellidoP,apellidoM,telefono")] Huesped huesped*/)
+        //{
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Huesped huesped = db.Huespeds.Find(id);
-            if (huesped == null)
-            {
-                return HttpNotFound();
-            }
-            return View(huesped);
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Huesped huesped = db.Huespeds.Find(id);
+        //    if (huesped == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(huesped);
 
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(huesped).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            //return View(huesped);
-        }
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //    db.Entry(huesped).State = EntityState.Modified;
+        //    //    db.SaveChanges();
+        //    //    return RedirectToAction("Index");
+        //    //}
+        //    //return View(huesped);
+        //}
 
         // POST: Libro/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
