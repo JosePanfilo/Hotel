@@ -18,8 +18,10 @@ namespace Hotel.Controllers
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public JsonResult AjaxIndex(String strBuscado)
         {
+            //var huespedes = db.Huespeds.ToList();
+
             var huespedes = from huesped in db.Huespeds
-                            //where huesped.nombre.Contains(strBuscado)
+                            where huesped.nombre.Contains(strBuscado)
                           select new
                           {
                               huespedID = huesped.huespedID,
