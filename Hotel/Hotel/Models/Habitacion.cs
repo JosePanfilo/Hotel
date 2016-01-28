@@ -10,8 +10,7 @@ namespace Hotel.Models
     public class Habitacion
     {
         [Key]
-        public String habitacionID { get; set; } //Llave primaria
-
+        public int habitacionID { get; set; } //Llave primaria
         [DisplayName("Tamaño de la Habiación")]
         public string tamañoHabitacion { get; set; }
         [DisplayName("Estado de la Habiación")]

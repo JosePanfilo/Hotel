@@ -6,14 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Hotel.DAL;
 using Hotel.Models;
 
 namespace Hotel.Controllers
 {
     public class ReservacionController : Controller
     {
-        private Contexto db = new Contexto();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         //public JsonResult AjaxIndex(String strBuscado)
         //{
@@ -24,8 +23,8 @@ namespace Hotel.Controllers
         // GET: Reservacion
         public ActionResult Index()
         {
-            var reservacion = db.reservacion.Include(r => r.habitacion).Include(r => r.huesped);
-            return View(reservacion.ToList());
+            var reservacions = db.Reservacions.Include(r => r.habitacion).Include(r => r.huesped);
+            return View(reservacions.ToList());
         }
 
         // GET: Reservacion/Details/5
@@ -35,7 +34,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservacion reservacion = db.reservacion.Find(id);
+            Reservacion reservacion = db.Reservacions.Find(id);
             if (reservacion == null)
             {
                 return HttpNotFound();
@@ -46,8 +45,8 @@ namespace Hotel.Controllers
         // GET: Reservacion/Create
         public ActionResult Create()
         {
-            ViewBag.habitacionID = new SelectList(db.habitacion, "habitacionID", "tamañoHabitacion");
-            ViewBag.huespedID = new SelectList(db.huesped, "huespedID", "nombre");
+            ViewBag.habitacionID = new SelectList(db.Habitacions, "habitacionID", "tamañoHabitacion");
+            ViewBag.huespedID = new SelectList(db.Huespeds, "huespedID", "nombre");
             return View();
         }
 
@@ -60,13 +59,13 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.reservacion.Add(reservacion);
+                db.Reservacions.Add(reservacion);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.habitacionID = new SelectList(db.habitacion, "habitacionID", "tamañoHabitacion", reservacion.habitacionID);
-            ViewBag.huespedID = new SelectList(db.huesped, "huespedID", "nombre", reservacion.huespedID);
+            ViewBag.habitacionID = new SelectList(db.Habitacions, "habitacionID", "tamañoHabitacion", reservacion.habitacionID);
+            ViewBag.huespedID = new SelectList(db.Huespeds, "huespedID", "nombre", reservacion.huespedID);
             return View(reservacion);
         }
 
@@ -77,13 +76,13 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservacion reservacion = db.reservacion.Find(id);
+            Reservacion reservacion = db.Reservacions.Find(id);
             if (reservacion == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.habitacionID = new SelectList(db.habitacion, "habitacionID", "tamañoHabitacion", reservacion.habitacionID);
-            ViewBag.huespedID = new SelectList(db.huesped, "huespedID", "nombre", reservacion.huespedID);
+            ViewBag.habitacionID = new SelectList(db.Habitacions, "habitacionID", "tamañoHabitacion", reservacion.habitacionID);
+            ViewBag.huespedID = new SelectList(db.Huespeds, "huespedID", "nombre", reservacion.huespedID);
             return View(reservacion);
         }
 
@@ -100,8 +99,8 @@ namespace Hotel.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.habitacionID = new SelectList(db.habitacion, "habitacionID", "tamañoHabitacion", reservacion.habitacionID);
-            ViewBag.huespedID = new SelectList(db.huesped, "huespedID", "nombre", reservacion.huespedID);
+            ViewBag.habitacionID = new SelectList(db.Habitacions, "habitacionID", "tamañoHabitacion", reservacion.habitacionID);
+            ViewBag.huespedID = new SelectList(db.Huespeds, "huespedID", "nombre", reservacion.huespedID);
             return View(reservacion);
         }
 
@@ -112,7 +111,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservacion reservacion = db.reservacion.Find(id);
+            Reservacion reservacion = db.Reservacions.Find(id);
             if (reservacion == null)
             {
                 return HttpNotFound();
@@ -125,8 +124,8 @@ namespace Hotel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Reservacion reservacion = db.reservacion.Find(id);
-            db.reservacion.Remove(reservacion);
+            Reservacion reservacion = db.Reservacions.Find(id);
+            db.Reservacions.Remove(reservacion);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
