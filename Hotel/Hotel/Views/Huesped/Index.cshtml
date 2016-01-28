@@ -3,29 +3,14 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    Hotel.Models.Huesped nuevoHuesped = new Hotel.Models.Huesped();
-    Hotel.Models.VMHuesped vmHuesped = new Hotel.Models.VMHuesped(nuevoHuesped);
 }
 
 <h2>Index</h2>
-<!-- Trigger the modal with a button -->
-<a data-toggle="modal" data-target="#modalAlta">Nuevo Huesped</a>
 
-@using (Html.BeginForm(null, null, FormMethod.Get))
-{
-    <input type="text" name="strBuscado" value="" placeholder="Buscar Huesped" />
-    <button>Buscar</button>
-}
-
-
-
-        @*
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-        *@
-
-<table id="tablaHuesped" class="table">
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)
@@ -57,16 +42,19 @@
             @Html.DisplayFor(modelItem => item.telefono)
         </td>
         <td>
-            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" huespedId="@item.huespedID">Detalles</a> |
-            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" huespedId="@item.huespedID">Borrar</a> |
-            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" huespedId="@item.huespedID">Editar</a>
+            <a id="enlaceDetalles" data-toggle="modal" data-target="#modalDetalles" huespedID="@item.huespedID">Detalles</a> |
+            <a id="enlaceBorrar" data-toggle="modal" data-target="#modalBorrar" huespedID="@item.huespedID">Borrar</a> |
+            <a id="enlaceEditar" data-toggle="modal" data-target="#modalEditar" huespedID="@item.huespedID">Editar</a>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.huespedID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.huespedID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.huespedID })*@
         </td>
     </tr>
 }
 
 </table>
 <!------------------------------------------------------------------------------------------------------->
-                        <!--MODAL DE CREATE-->
+<!--MODAL DE CREATE-->
 <div id="modalAlta" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -78,7 +66,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE CREACION DE ALUMNOS-->
-                @Html.Partial("Create", nuevoHuesped)
+                @*@Html.Partial("Create", nuevoHuesped)*@
                 <p>Modal para crear un nuevo Huesped</p>
             </div>
             <div class="modal-footer">
@@ -89,7 +77,7 @@
     </div>
 </div><!-- Modal -->
 <!------------------------------------------------------------------------------------------------------->
-                                <!--MODAL DE DETAILS-->
+<!--MODAL DE DETAILS-->
 <div id="modalDetalles" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -101,7 +89,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE DETALLES DE Huesped-->
-                @Html.Partial("Details", vmHuesped)
+                @*@Html.Partial("Details", vmHuesped)*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -110,7 +98,7 @@
     </div>
 </div>
 <!------------------------------------------------------------------------------------------------------->
-                                    <!--MODAL DE EDIT-->
+<!--MODAL DE EDIT-->
 <div id="modalEditar" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -121,7 +109,7 @@
                 <h4 class="modal-title">Modificar</h4>
             </div>
             <div class="modal-body">
-                @Html.Partial("Edit", nuevoHuesped)
+                @*@Html.Partial("Edit", nuevoHuesped)*@
             </div>
             <div class="modal-footer">
                 <button id="btnEditar" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -130,7 +118,7 @@
     </div>
 </div>
 <!------------------------------------------------------------------------------------------------------->
-                                    <!--MODAL DE DELETE-->
+<!--MODAL DE DELETE-->
 <div id="modalBorrar" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
