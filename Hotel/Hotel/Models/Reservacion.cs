@@ -51,9 +51,9 @@ namespace Hotel.Models
             this.fechaDeSalida = reservacion.fechaDeSalida;
             this.numeroDeHabitacion = reservacion.numeroDeHabitacion;
 
-            this.habitacionID = reservacion.habitacionID;
-            if (reservacion.habitacion != null)
-                this.habitacionID = reservacion.habitacion.habitacionID;
+            //this.habitacionID = reservacion.habitacionID;
+            //if (reservacion.habitacion != null)
+            //    this.habitacionID = reservacion.habitacion.habitacionID;
 
             this.huespedID = reservacion.huespedID;
             if (reservacion.huesped != null)

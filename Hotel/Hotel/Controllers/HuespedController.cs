@@ -6,22 +6,20 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Hotel.DAL;
 using Hotel.Models;
+using System.Web.Script.Serialization;
 
 namespace Hotel.Controllers
 {
     public class HuespedController : Controller
     {
-        private Contexto db = new Contexto();
+        private ApplicationDbContext db = new ApplicationDbContext();
        
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public JsonResult AjaxIndex(String strBuscado)
         {
-            //var huespedes = db.Huespeds.ToList();
-
             var huespedes = from huesped in db.Huespeds
-                            where huesped.nombre.Contains(strBuscado)
+                            //where huesped.nombre.Contains(strBuscado)
                           select new
                           {
                               huespedID = huesped.huespedID,
@@ -72,7 +70,9 @@ namespace Hotel.Controllers
         }
 
         // GET: Huesped/Details/5
-        public JsonResult Details(int? id)
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -93,6 +93,18 @@ namespace Hotel.Controllers
             return Json(vmHuesped, JsonRequestBehavior.AllowGet);
         }
 
+        // GET: Alumno/Details/5
+        [HttpPost]
+        public JsonResult AjaxDetails(Huesped huesped)
+        {
+            db.Entry(huesped).State = EntityState.Modified;
+            db.SaveChanges();
+
+            VMHuesped vmHuesped = new VMHuesped(huesped);
+
+            return Json(vmHuesped, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Huesped/Create
         public ActionResult Create()
         {
@@ -108,7 +120,7 @@ namespace Hotel.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.huesped.Add(huesped);
+                db.Huespeds.Add(huesped);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -123,7 +135,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.huesped.Find(id);
+            Huesped huesped = db.Huespeds.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
@@ -134,37 +146,9 @@ namespace Hotel.Controllers
         // POST: Huesped/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id/*[Bind(Include = "huespedID,nombre,apellidoP,apellidoM,telefono")] Huesped huesped*/)
-        {
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Huesped huesped = db.Huespeds.Find(id);
-            if (huesped == null)
-            {
-                return HttpNotFound();
-            }
-            return View(huesped);
-
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(huesped).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            //return View(huesped);
-        }
-
-        // POST: Libro/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "huespedID,nombre,isbn,autor,editorial,descripcion,año,noEjemplares")] Huesped huesped)
+        public ActionResult Edit([Bind(Include = "huespedID,nombre,apellidoP,apellidoM,telefono")] Huesped huesped)
         {
             if (ModelState.IsValid)
             {
@@ -215,7 +199,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.huesped.Find(id);
+            Huesped huesped = db.Huespeds.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
@@ -224,84 +208,15 @@ namespace Hotel.Controllers
         }
 
         // POST: Huesped/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        [HttpGet]
-        public JsonResult DeleteConfirmed(int libroId = 0)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
             Huesped huesped = db.Huespeds.Find(id);
             db.Huespeds.Remove(huesped);
             db.SaveChanges();
-                mensaje = "Se ha eliminado el libro satisfactoriamente";
-            }
-            catch (Exception exc)
-            {
-                mensaje = "Hubo un error en el servidor: " + exc.Message;
-            }
-            return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index");
         }
-
-        [HttpGet]
-        public JsonResult AjaxDelete(int huespedID = 0)
-        {
-            /*Un objeto instanciado del modelo de datos*/
-            Huesped huesped = db.Huespeds.Find(huespedID);
-
-            /*Necesito una instancia del modelo de vista*/
-            //VMAlumno vmAlumno = new VMAlumno(alumno);
-
-            //return Json(vmAlumno, JsonRequestBehavior.AllowGet);
-            return Json(huesped, JsonRequestBehavior.AllowGet);
-        }
-
-        // GET: Libro/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Huesped huesped = db.Huespeds.Find(id);
-        //    if (huesped == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(huesped);
-        //}
-
-        [HttpPost]
-        public JsonResult AjaxDelete(Huesped huesped)
-        {
-            String mensaje = String.Empty;
-
-
-            try
-            {
-                db.Entry(huesped).State = EntityState.Deleted;
-                int c = db.SaveChanges();
-                mensaje = "Se ha eliminado libro correctamente";
-            }
-            catch (Exception exc)
-            {
-                mensaje = "Hubo un error en el servidor: " + exc.Message;
-
-
-            }
-
-
-            //return Json(new { mensaje = mensaje }, JsonRequestBehavior.AllowGet);
-
-            return Json("Response from Delete", JsonRequestBehavior.AllowGet);
-
-        }
-
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Huesped huesped = db.Huespeds.Find(id);
-        //    db.Huespeds.Remove(huesped);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -312,5 +227,4 @@ namespace Hotel.Controllers
             base.Dispose(disposing);
         }
     }
-
-
+}
