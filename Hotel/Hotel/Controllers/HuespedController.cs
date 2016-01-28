@@ -19,33 +19,30 @@ namespace Hotel.Controllers
 
         public JsonResult AjaxIndex(String strBuscado)
         {
-            //var alumnos = db.alumnos.ToList();
-
-            var huespedes = from Huesped in db.Huespeds
-                            where Huesped.nombre.Contains(strBuscado)
+            var huespedes = from Huesped in db.huesped where Huesped.nombre.Contains(strBuscado)
                          select new
                          {
                              huespedID = Huesped.huespedID,
                              nombre = Huesped.nombre,
                              apellidoP = Huesped.apellidoP,
                              apellidoM = Huesped.apellidoM,
-                             telefono = Huesped.telefono,
+                             telefono = Huesped.telefono
                             
                          };
 
             return Json(huespedes, JsonRequestBehavior.AllowGet);
         }
-        // GET: Libro
+        // GET: huesped
         public ActionResult Index()
         {
-            return View(db.Huespeds.ToList());
+            return View(db.huesped.ToList());
         }
 
         // GET: Huesped/Details/5
         public JsonResult Details(int? id)
         {
             /*Un objeto instanciado del modelo de datos*/
-            Huesped huesped = db.Huespeds.Find(id);
+            Huesped huesped = db.huesped.Find(id);
 
             /*Necesito una instancia del modelo de vista*/
             //VMAlumno vmAlumno = new VMAlumno(alumno);
@@ -71,16 +68,24 @@ namespace Hotel.Controllers
            [HttpPost]
                 //[ValidateAntiForgeryToken]
          public JsonResult Create(Huesped huesped)
+        {
+            String mensaje = String.Empty;
+            try
+            {
+                if (ModelState.IsValid)
                 {
-            if (ModelState.IsValid)
-           {
-               db.huesped.Add(huesped);
-               db.SaveChanges();
-              return RedirectToAction("Index");
-                    }
+                    var nuevoHuesped = db.huesped.Add(huesped);
+                    db.SaveChanges();
 
-                    return View(huesped);
+                    mensaje = "Se han Guardado los datos satisfactoriamente";
                 }
+            }
+            catch (Exception exc)
+            {
+                mensaje = "Hubo un error en el servidor: " + exc.Message;
+            }
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
+        }
 
                 // GET: Huesped/Edit/5
         public ActionResult Edit(int? id)
@@ -89,7 +94,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.Huespeds.Find(id);
+            Huesped huesped = db.huesped.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
@@ -113,10 +118,10 @@ namespace Hotel.Controllers
             return View(huesped);
         }
         [HttpGet]
-        public JsonResult AjaxEdit(int libroId = 0)
+        public JsonResult AjaxEdit(int huespedID = 0)
         {
             /*Un objeto instanciado del modelo de datos*/
-            Huesped huesped = db.Huespeds.Find(libroId);
+            Huesped huesped = db.huesped.Find(huespedID);
 
             
             return Json(huesped, JsonRequestBehavior.AllowGet);
@@ -149,7 +154,7 @@ namespace Hotel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Huesped huesped = db.Huespeds.Find(id);
+            Huesped huesped = db.huesped.Find(id);
             if (huesped == null)
             {
                 return HttpNotFound();
@@ -164,8 +169,8 @@ namespace Hotel.Controllers
             String mensaje = String.Empty;
             try
             {
-                Huesped huesped = db.Huespeds.Find(huespedID);
-                db.Huespeds.Remove(huesped);
+                Huesped huesped = db.huesped.Find(huespedID);
+                db.huesped.Remove(huesped);
                 db.SaveChanges();
                 mensaje = "Se ha eliminado el libro satisfactoriamente";
             }
@@ -180,7 +185,7 @@ namespace Hotel.Controllers
         public JsonResult AjaxDelete(int huespedID = 0)
         {
             /*Un objeto instanciado del modelo de datos*/
-            Huesped huesped = db.Huespeds.Find(huespedID);
+            Huesped huesped = db.huesped.Find(huespedID);
 
            
             return Json(huesped, JsonRequestBehavior.AllowGet);

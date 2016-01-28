@@ -3,14 +3,18 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Hotel.Models.Huesped nuevoHuesped = new Hotel.Models.Huesped();
 }
 
 <h2>Index</h2>
+<button id="btnCrear" type="button" data-toggle="modal" data-target="#modalAlta">Nuevo Huesped</button>
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
 </p>*@
-<table class="table">
+<input type="text" name="strBuscado" value="" placeholder="Buscar Huesped" />
+<button>Buscar</button>
+<table id="tablaHuesped" class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)
@@ -66,7 +70,7 @@
             </div>
             <div class="modal-body">
                 <!-- VISTA DE CREACION DE ALUMNOS-->
-                @*@Html.Partial("Create", nuevoHuesped)*@
+                 @Html.Partial("Create", nuevoHuesped)
                 <p>Modal para crear un nuevo Huesped</p>
             </div>
             <div class="modal-footer">
@@ -89,11 +93,13 @@
             </div>
             <div class="modal-body">
                 <div></div>
-                <!-- VISTA DE DETALLES DE Huesped-->
-                @*@Html.Partial("Details", vmHuesped)*@
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div id="detalleHuesped"">
+                    <!-- VISTA DE DETALLES DE Huesped-->
+                    @*@Html.Partial("Details", vmHuesped)*@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -110,7 +116,7 @@
                 <h4 class="modal-title">Modificar</h4>
             </div>
             <div class="modal-body">
-                @*@Html.Partial("Edit", nuevoHuesped)*@
+                @Html.Partial("Edit", nuevoHuesped)
             </div>
             <div class="modal-footer">
                 <button id="btnEditar" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
