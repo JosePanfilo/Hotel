@@ -16,7 +16,7 @@
     //Si todo salio bien en la transaccion ajax entra en .success
         }).success(function (result) {
             //se crea un a nueva variable de tipo tbody en la tabla de la vista de index Huesped
-            var tablaHuesped = $("tablaHuesped tbody");
+            var tablaHuesped = $("#tablaHuesped tbody");
             //se limpia la tabla
             tablaHuesped.html("");
             //se transforma el archivo Json que biene en formato json de la base de datos de cadena de string a formato json puro
@@ -118,7 +118,7 @@
     //<-<-<-<-<-<-<-<-<-<-<-<--<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->//
 
 
-    $("#btnCrear").click(function () {
+    $("#btnCrearhuesped").click(function () {
         nuevoHuesped = {
             nombre: $("#modalAlta #nombre").val(),
             apellidoP: $("#modalAlta #apellidoP").val(),
@@ -132,6 +132,7 @@
             data: JSON.stringify(nuevoHuesped),
             type: 'post',
         }).success(function (result) {
+            alert(result.mensaje)
             rellenarIndexHuesped();
         }).error(function (xhr, status) {
 
