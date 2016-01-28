@@ -20,11 +20,11 @@
             //se limpia la tabla
             tablaHuesped.html("");
             //se transforma el archivo Json que biene en formato json de la base de datos de cadena de string a formato json puro
-            var conjunntoHuespedes = JSON.parse(result);
+            var conjuntoHuespedes = JSON.parse(result);
 
             //Se rellena la tabla de huespedes con todos los datos qe la integra
-            for (var indice in conjunntoHuespedes) {
-                var huesped = conjunntoHuespedes[indice];
+            for (var indice in conjuntoHuespedes) {
+                var huesped = conjuntoHuespedes[indice];
                 tablaHuesped.append("<tr>" +
                      "<td>" + huesped.nombre + "</td>" +
                      "<td>" + huesped.apellidoP + "</td>" +
@@ -33,7 +33,7 @@
                      "<td>" + "<a id='enlaceDetalles' data-toggle='modal' data-target='#modalDetalles' huespedID='" + huesped.huespedID + ">Detalles</a> |" +
                             "<a id='enlaceBorrar' data-toggle='modal' data-target='#modalBorrar' huespedID='" + huesped.huespedID + ">Borrar</a> |'" +
                             "<a id='enlaceEditar' data-toggle='modal' data-target='#modalEditar' huespedID=" + huesped.huespedID + ">Editar</a>" +
-                     "</td>")
+                     "</td>"+"</tr>")
             }
             //Si sale algun error en la transaccion Ajax entra en .error
         }).error(function (xhr, status) {
@@ -81,7 +81,7 @@
             url: '/Huesped/AjaxEdit',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(libroModificado),
+            data: JSON.stringify(huespedModificado),
             type: 'post',
         }).success(function (result) {
             rellenarIndexHuesped();
@@ -134,7 +134,7 @@
         }).success(function (result) {
             rellenarIndexHuesped();
         }).error(function (xhr, status) {
-            alert("Lo sentimos no se pudo conectar con el servidor, verifique su conexion a internet. XD");
+
         })
         $("#modalAlta").modal("toggle");
     })
@@ -147,15 +147,15 @@
         var enlaceClickeado = $(this)
         var huespedID = enlaceClickeado.attr("huespedID")
         $.ajax({
-            url: "/Huesped/details", //Accion a ejecutar en el server
+            url: "/Huesped/Details", //Accion a ejecutar en el server
             contentType: "application/html; charset=utf-8",
             type: "GET",
             dataType: "html",
             //Dato enviado al server
-            data: { id: noID } 
+            data: { id: huespedID } 
         }).success(function (result) {
             var huesped = JSON.parse(result);
-            var detalles = $("#detallesHuesped");
+            var detalles = $("#detalleHuesped");
             detalles.html("");
             //Con la inofrmacion obtenida se rellena el formulario
             detalles.append(
