@@ -118,7 +118,7 @@
     //<-<-<-<-<-<-<-<-<-<-<-<--<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->//
 
 
-    $("#btnCrear").click(function () {
+    $("#btnCrearhuesped").click(function () {
         nuevoHuesped = {
             nombre: $("#modalAlta #nombre").val(),
             apellidoP: $("#modalAlta #apellidoP").val(),
@@ -132,6 +132,7 @@
             data: JSON.stringify(nuevoHuesped),
             type: 'post',
         }).success(function (result) {
+            alert(result.mensaje)
             rellenarIndexHuesped();
         }).error(function (xhr, status) {
 
